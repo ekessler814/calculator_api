@@ -1,0 +1,13 @@
+curl -H 'Accept: application/json; indent=4' -u admin:testpass123 http://127.0.0.1:8000/calculations/
+
+curl -H 'Accept: application/json; indent=4' -u admin:testpass123 http://127.0.0.1:8000/calculations/?calculator_memory=3
+
+curl -H 'Accept: application/json; indent=4' -u admin:testpass123 http://127.0.0.1:8000/calculator_memories/
+
+curl -X POST -H "Content-Type: application/json" \
+   -d '{"session_name": "test2"}' \
+   -u admin:testpass123 http://127.0.0.1:8000/calculator_memories/
+
+curl -X POST -H "Content-Type: application/json" \
+   -d '{"calculator_memory": "4", "inputs": "(4f + 2)* 8"}' \
+   -u admin:testpass123 http://127.0.0.1:8000/calculations/
