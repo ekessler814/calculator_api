@@ -9,5 +9,5 @@ curl -X POST -H "Content-Type: application/json" \
    -u admin:testpass123 http://127.0.0.1:8000/calculator_memories/
 
 curl -X POST -H "Content-Type: application/json" \
-   -d '{"calculator_memory": "4", "inputs": "(4f + 2)* 8"}' \
+   -d '{"calculator_memory": "3", "inputs": "(13 + 2)* 8", "datetime_created": "2022-06-22T05:47:41.479963Z"}' \
    -u admin:testpass123 http://127.0.0.1:8000/calculations/

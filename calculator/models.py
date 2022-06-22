@@ -8,7 +8,6 @@ This model allows storing a multitude of individual calculations under a session
 which are dated and can be named
 """
 class CalculatorMemory(models.Model):
-
     # auto set datetime_created as timezone.now
     # todo: don't allow passing custom values
     datetime_created = models.DateTimeField(default=timezone.now)
@@ -23,7 +22,6 @@ calculation step. Model is foreign keyed to CalculatorMemory with many
 Calculation models to a single CalculatorMemory
 """
 class Calculation(models.Model):
-
     # calculator_memory is a foreign key to CalculatorMemory
     calculator_memory = models.ForeignKey(CalculatorMemory, on_delete=models.CASCADE)
     # inputs holds the mathematical parameters used in the calculation for example
