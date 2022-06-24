@@ -10,6 +10,7 @@ export const calcSlice = createSlice({
   initialState: {
     inputBox: "",
     calculator_memories: [],
+    calculations: [],
     calc_fetch_status: 'idle',
     calc_fetch_error: null,
   },
@@ -44,22 +45,72 @@ export const calcSlice = createSlice({
     },
     clear(state) {
       state.inputBox = ""
-    }
+    },
 
   },
     extraReducers(builder) {
         builder
+          //.addCase()
           .addCase(fetchMemories.pending, (state, action) => {
-            state.status = 'loading'
+            state.calc_fetch_status = 'loading'
           })
           .addCase(fetchMemories.fulfilled, (state, action) => {
-            state.status = 'succeeded'
+            state.calc_fetch_status = 'succeeded'
             // Add any fetched posts to the array
-            state.calculator_memories = state.calculator_memories.concat(action.payload)
+            state.calculator_memories = action.payload
           })
           .addCase(fetchMemories.rejected, (state, action) => {
-            state.status = 'failed'
-            state.error = action.error.message
+            state.calc_fetch_status = 'failed'
+            state.calc_fetch_error = action.error.message
+          })
+          .addCase(fetchCalculations.pending, (state, action) => {
+            state.calc_fetch_status = 'loading'
+          })
+          .addCase(fetchCalculations.fulfilled, (state, action) => {
+            state.calc_fetch_status = 'succeeded'
+            // Add any fetched posts to the array
+            state.calculations = action.payload
+
+            const sorted = state.calculations.slice().sort(function(a,b){
+              // Turn your strings into dates, and then subtract them
+              // to get a value that is either negative, positive, or zero.
+              return new Date(b.datetime_created) - new Date(a.datetime_created);
+            });
+
+            if (sorted.length) {
+              state.inputBox = sorted[0].result || ""
+            }
+            else {
+              state.inputBox = ""
+            }
+          })
+          .addCase(fetchCalculations.rejected, (state, action) => {
+            state.calc_fetch_status = 'failed'
+            state.calc_fetch_error = action.error.message
+          })
+          .addCase(postCalculation.pending, (state, action) => {
+            state.calc_fetch_status = 'loading'
+          })
+          .addCase(postCalculation.fulfilled, (state, action) => {
+            state.calc_fetch_status = 'succeeded'
+            // Add any fetched posts to the array
+            state.calculations.push(action.payload)
+            const sorted = state.calculations.slice().sort(function(a,b){
+              // Turn your strings into dates, and then subtract them
+              // to get a value that is either negative, positive, or zero.
+              return new Date(b.datetime_created) - new Date(a.datetime_created);
+            });
+
+            if (sorted.length) {
+              state.inputBox = sorted[0].result || ""
+            }
+            else {
+              state.inputBox = ""
+            }
+          })
+          .addCase(postCalculation.rejected, (state, action) => {
+            state.calc_fetch_status = 'failed'
+            state.calc_fetch_error = action.error.message
           })
       }
  })
@@ -69,12 +120,27 @@ export const fetchMemories = createAsyncThunk('calc/fetchMemories', async () => 
   return response.data
 })
 
-export const selectAllMemories = state => state.calculator_memories
+export const fetchCalculations = createAsyncThunk('calc/fetchCalculations', async (param) => {
+  const response = await client.get('http://localhost:8000/calculations?calculator_memory=' + param)
+  return response.data
+})
+
+export const postCalculation = createAsyncThunk('calc/postCalculations', async (params) => {
+  const response = await client.post('http://localhost:8000/calculations/', params)
+  return response.data
+})
+
+export const selectAllMemories = state => state.calc.calculator_memories
+
+export const selectAllCalculations = state => state.calc.calculations
 
 export const selectMemoriesById = (state, postId) =>
-  state.calculator_memories.find(post => post.id === postId)
+  state.calc.calculator_memories.find(post => post.id === postId)
+
+export const selectCalculationById = (state, postId) =>
+  state.calc.calculations.find(post => post.id === postId)
 
 // Action creators are generated for each case reducer function
-export const { typeEquation, appendToEquation, minusCharacter, plusMinus, clear } = calcSlice.actions
+export const { typeEquation, appendToEquation, minusCharacter, plusMinus, clear, equals } = calcSlice.actions
 
 export default calcSlice.reducer

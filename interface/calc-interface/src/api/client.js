@@ -38,7 +38,6 @@ export async function client(endpoint, { body, ...customConfig } = {}) {
 }
 
 client.get = function (endpoint, customConfig = {}) {
-  debugger
   return client(endpoint, { ...customConfig, method: 'GET' })
 }
 

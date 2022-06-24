@@ -6,21 +6,30 @@ export const styles = {
       boxSizing: 'border-box',
   },
 
- containerBox: {
-   display: 'flex',
-   flexDirection: 'column',
-   alignItems: 'flex-start',
-   width: '200px',
- },
-
  buttonBox: {
    display: 'flex',
    justifyContent: 'space-between',
-   width: '200px',
+   width: '250px',
  },
+
+  side: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '450px',
+  },
+
   button : {
       fontFamily: "Lucida Console, Courier New, monospace",
       width: '50px',
       height: '50px'
   },
+  selectBox: {
+    width: '300px',
+    height: '300px',
+    outline: '2px solid black',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    overflow: 'auto'
+  }
 }
