@@ -78,7 +78,7 @@ Calc()
   return (
     <div style={{...styles.side}}>
     <div style={styles.buttonBox}>
-    <div style={{width: '250px'}}>
+    <div>
       <input onChange={(e) => dispatch(typeEquation(e.target.value))} style={styles.input} value={inputBox} />
     <div style={styles.buttonBox}>
 
@@ -123,7 +123,7 @@ Calc()
 
       </div>
 
-      <select ref={selectRef} onChange={(e) => selectChange(e)}>{RenderMemorySelect()}</select>
+      <select style={{width: '250px', 'marginTop': '10px', 'height': '30px'}} ref={selectRef} onChange={(e) => selectChange(e)}>{RenderMemorySelect()}</select>
 
       </div>
 
