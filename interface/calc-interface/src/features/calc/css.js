@@ -1,5 +1,6 @@
 export const styles = {
     input: {
+      height: '50px',
       fontFamily: 'Arial, Helvetica, sans-serif',
       width: '100%',
       boxSizing: 'border-box',
@@ -15,11 +16,11 @@ export const styles = {
  buttonBox: {
    display: 'flex',
    justifyContent: 'space-between',
-   width: '100%',
+   width: '200px',
  },
   button : {
       fontFamily: "Lucida Console, Courier New, monospace",
-      width: '100%',
-      height: '30px'
+      width: '50px',
+      height: '50px'
   },
 }

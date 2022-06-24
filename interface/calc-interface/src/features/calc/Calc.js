@@ -1,49 +1,79 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { typeEquation, appendToEquation } from './calcSlice'
+import { typeEquation, appendToEquation, minusCharacter, plusMinus, clear } from './calcSlice'
 import { styles } from './css'
+import { selectAllMemories, fetchMemories } from './calcSlice'
+
 export function Calc() {
   const inputBox = useSelector(state => state.calc.inputBox)
   const dispatch = useDispatch()
 
+  const appendChar = (char) => {
+    return <button onClick={() => dispatch(appendToEquation(char))} style={styles.button}>{char}</button>
+  }
+
+const PostsList = () => {
+  const dispatch = useDispatch()
+  const memories = useSelector(selectAllMemories)
+
+  const memoryStatus = useSelector(state => state.calc.calc_fetch_status)
+
+  useEffect(() => {
+    if (memoryStatus === 'idle') {
+      dispatch(fetchMemories())
+    }
+  }, [memoryStatus, dispatch])
+
+  console.log(memories)
+}
+PostsList()
   return (
-    <div style={styles.containerBox}>
+    <div style={{width: '250px'}}>
       <input onChange={(e) => dispatch(typeEquation(e.target.value))} style={styles.input} value={inputBox} />
+    <div style={styles.buttonBox}>
+
         {/* container for the buttons */}
 
-
-        {/* first row */}
-        <div style={styles.buttonBox}>
-          <button onClick={() => dispatch(appendToEquation("1"))} style={styles.button}>1</button>
-          <button onClick={() => dispatch(appendToEquation("2"))} style={styles.button}>2</button>
-          <button onClick={() => dispatch(appendToEquation("3"))} style={styles.button}>3</button>
+        <div style={styles.containerBox}>
+          {appendChar("7")}
+          {appendChar("4")}
+          {appendChar("1")}
+          <button onClick={() => dispatch(plusMinus())} style={styles.button}>{"+/-"}</button>
         </div>
 
-        {/* second row */}
-        <div style={styles.buttonBox}>
-          <button onClick={() => dispatch(appendToEquation("4"))} style={styles.button}>4</button>
-          <button onClick={() => dispatch(appendToEquation("5"))} style={styles.button}>5</button>
-          <button onClick={() => dispatch(appendToEquation("6"))} style={styles.button}>6</button>
+
+        <div style={styles.containerBox}>
+          {appendChar("8")}
+          {appendChar("5")}
+          {appendChar("2")}
+          {appendChar("0")}
         </div>
 
-        {/* third row */}
-        <div style={styles.buttonBox}>
-          <button onClick={() => dispatch(appendToEquation("7"))} style={styles.button}>7</button>
-          <button onClick={() => dispatch(appendToEquation("8"))} style={styles.button}>8</button>
-          <button onClick={() => dispatch(appendToEquation("9"))} style={styles.button}>9</button>
+        <div style={styles.containerBox}>
+          {appendChar("9")}
+          {appendChar("6")}
+          {appendChar("3")}
+          {appendChar(".")}
+        </div>
+
+        <div style={styles.containerBox}>
+          {appendChar("*")}
+          {appendChar("-")}
+          {appendChar("+")}
+          {appendChar("=")}
         </div>
 
         {/* fourth row */}
-        <div style={styles.buttonBox}>
-
-          <button onClick={() => dispatch(appendToEquation("0"))} style={styles.button}>0</button>
-          <button onClick={() => dispatch(appendToEquation("."))} style={styles.button}>.</button>
+        <div style={styles.containerBox}>
+          <button onClick={() => dispatch(minusCharacter())} style={styles.button}>{"<-"}</button>
+          <button onClick={() => dispatch(clear())} style={styles.button}>{"clr"}</button>
+          {appendChar("/")}
 
         </div>
 
 
 
 
-    </div>
+    </div></div>
   )
 }
