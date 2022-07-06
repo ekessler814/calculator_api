@@ -6,22 +6,19 @@ export const styles = {
       width: '100%',
       boxSizing: 'border-box',
   },
-
  buttonBox: {
    display: 'flex',
    justifyContent: 'space-between',
-   width: '330px',
+   width: '400px',
  },
-
   side: {
     display: 'flex',
     justifyContent: 'space-between',
-    width: '700px',
+    width: '750px',
   },
-
   button : {
-    height: '50px',
-    width: '50px',
+    height: '80px',
+    width: '80px',
     backgroundColor: "Blue",
     border: "none",
     color: "white",
@@ -40,6 +37,12 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
-    overflow: 'auto'
+    overflow: 'auto',
+    cursor: 'pointer',
+  },
+  memorySelect: {
+    width: '250px',
+    marginTop: '10px',
+    height: '30px'
   }
 }
