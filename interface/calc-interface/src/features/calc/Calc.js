@@ -11,6 +11,7 @@ import {
   setHighlighted,
 } from "./calcSlice";
 import { styles } from "./css";
+import { sortElementsByDate } from './util'
 import {
   selectAllMemories,
   selectAllCalculations,
@@ -19,13 +20,6 @@ import {
   postCalculation,
 } from "./calcSlice";
 
-const sortElementsByDate = (calculations) => {
-  return calculations.slice().sort(function (a, b) {
-    // sort by datetime, descending from newest
-    return new Date(b.datetime_created) - new Date(a.datetime_created);
-  });
-};
-
 export function Calc() {
   const selectRef = useRef(null);
   const inputBox = useSelector((state) => state.calc.inputBox);
@@ -33,6 +27,7 @@ export function Calc() {
 
   const dispatch = useDispatch();
 
+  /* start block of button handlers, this could be optimized  */
   const PlusMinus = (dispatch) => {
     return (
       <button onClick={() => dispatch(plusMinus())} style={styles.button}>
@@ -40,19 +35,16 @@ export function Calc() {
       </button>
     );
   };
-
   const Backspace = () => (
     <button onClick={() => dispatch(minusCharacter())} style={styles.button}>
       {"<-"}
     </button>
   );
-
   const Clear = () => (
     <button onClick={() => dispatch(clear())} style={styles.button}>
       {"clr"}
     </button>
   );
-
   const Equals = () => (
     <button
       onClick={() =>
@@ -68,7 +60,6 @@ export function Calc() {
       {"="}
     </button>
   );
-
   const AppendChar = ({ char }) => {
     return (
       <button
@@ -79,6 +70,7 @@ export function Calc() {
       </button>
     );
   };
+  /* end block of button handlers, this could be optimized  */
 
   // Render display div that shows history of calcations
   const RenderCalculationBox = () => {
@@ -86,34 +78,35 @@ export function Calc() {
     const selectedCalc = useSelector((state) => state.calc.calc_select);
     const highlightedCalc = useSelector((state) => state.calc.calc_highlighted);
     const sorted = sortElementsByDate(calculations);
-    const selectedStyle = {
-      backgroundColor: "blue",
-      color: "white",
-    };
 
     const calculationsList =
       sorted.length > 0 &&
       sorted.map((item, i) => {
-        // debugger
+
+        // true if current iterated calc id is equal to highlighted id
         const highlighted = highlightedCalc === item.id;
+        // set highlighted style if element highlighted
         const highlightedStyle = highlighted
-          ? {
-              backgroundColor: "yellow",
-            }
+          ? styles.highlighted
           : {};
+
         return (
           <option
             style={{
               ...highlightedStyle,
-              ...(item.id === selectedCalc ? selectedStyle : {}),
+              /* selectedStyle overwrites bg color from highlightedStyle */
+              ...(item.id === selectedCalc ? styles.selectedStyle : {}),
             }}
             onMouseEnter={({ target }) => {
+              // set highlighted calc
               dispatch(setHighlighted(parseInt(target.value)));
             }}
             onMouseLeave={() => {
-              dispatch(setHighlighted(""));
+              // clear highlighted calc
+              dispatch(setHighlighted(''));
             }}
             onClick={() => {
+              // set selected calc
               const { result, id } = item;
               dispatch(setCalc({ result, id }));
             }}

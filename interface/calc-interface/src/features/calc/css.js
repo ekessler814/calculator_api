@@ -1,24 +1,24 @@
 export const styles = {
-    input: {
-      marginBottom: '10px',
-      height: '50px',
-      fontFamily: 'Arial, Helvetica, sans-serif',
-      width: '100%',
-      boxSizing: 'border-box',
+  input: {
+    marginBottom: "10px",
+    height: "50px",
+    fontFamily: "Arial, Helvetica, sans-serif",
+    width: "100%",
+    boxSizing: "border-box",
   },
- buttonBox: {
-   display: 'flex',
-   justifyContent: 'space-between',
-   width: '400px',
- },
+  buttonBox: {
+    display: "flex",
+    justifyContent: "space-between",
+    width: "400px",
+  },
   side: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    width: '750px',
+    display: "flex",
+    justifyContent: "space-between",
+    width: "750px",
   },
-  button : {
-    height: '80px',
-    width: '80px',
+  button: {
+    height: "80px",
+    width: "80px",
     backgroundColor: "Blue",
     border: "none",
     color: "white",
@@ -27,22 +27,28 @@ export const styles = {
     textDecoration: "none",
     display: "inline-block",
     fontSize: "16px",
-    outline: '2px solid black',
-
+    outline: "2px solid black",
   },
   selectBox: {
-    width: '300px',
-    height: '300px',
-    outline: '2px solid black',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    overflow: 'auto',
-    cursor: 'pointer',
+    width: "300px",
+    height: "300px",
+    outline: "2px solid black",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    overflow: "auto",
+    cursor: "pointer",
   },
   memorySelect: {
-    width: '250px',
-    marginTop: '10px',
-    height: '30px'
+    width: "250px",
+    marginTop: "10px",
+    height: "30px",
+  },
+  selectedStyle: {
+    backgroundColor: "blue",
+    color: "white",
+  },
+  highlighted: {
+    backgroundColor: 'yellow'
   }
-}
+};
